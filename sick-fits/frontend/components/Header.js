@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import Nav from './Nav';
 
 const LogoStyles = styled.h1`
-  background: red;
+  background-color: red;
   font-size: 4rem;
   margin-left: 2rem;
+  position: relative;
   z-index: 2;
   transform: skew(-7deg);
   text-transform: uppercase;
@@ -30,7 +31,7 @@ const HeaderStyles = styled.header`
   .sub-bar {
     display: grid;
     grid-template-columns: 1fr auto;
-    border-bottom: 1px solid var(--black, black);
+    border-bottom: 3px solid var(--grey);
   }
 `;
 
