@@ -8,12 +8,13 @@ const LogoStyles = styled.h1`
   margin-left: 2rem;
   z-index: 2;
   transform: skew(-7deg);
-  text-decoration: none;
   text-transform: uppercase;
-  padding: 0.5rem 1rem;
 
   a {
     color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
   }
 `;
 
