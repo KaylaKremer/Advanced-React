@@ -19,7 +19,7 @@ export const CartItem = list({
       defaultValue: 1,
       isRequired: true,
     }),
-    product: relationship({ ref: Product }),
+    product: relationship({ ref: 'Product' }),
     user: relationship({ ref: 'User.cart' }),
   },
 });
