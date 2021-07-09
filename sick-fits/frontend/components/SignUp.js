@@ -1,56 +1,69 @@
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
 import Form from './styles/Form';
-import useForm from '../lib/useForm';
-import { CURRENT_USER_QUERY } from './User';
 import DisplayError from './ErrorMessage';
+import useForm from '../lib/useForm';
 
-export default function SignIn() {
-  const SIGNIN_MUTATION = gql`
-    mutation SIGNIN_MUTATION($email: String!, $password: String!) {
-      authenticateUserWithPassword(email: $email, password: $password) {
-        ... on UserAuthenticationWithPasswordSuccess {
-          item {
-            id
-            email
-            name
-          }
+export default function SignUp() {
+  const SIGNUP_MUTATION = gql`
+    mutation SIGNUP_MUTATION(
+        $email: String!, 
+        $password: String!, 
+        $name: String!
+    ) {
+      createUser(
+        data: 
+            { 
+                email: $email, 
+                password: $password, 
+                name: $name
+            }) {
+                id
+                email
+                name
+            }
         }
-        ... on UserAuthenticationWithPasswordFailure {
-          code
-          message
-        }
-      }
     }
   `;
 
   const { inputs, handleChange, resetForm } = useForm({
     email: '',
     password: '',
+    name: '',
   });
 
-  const [signin, { data, loading }] = useMutation(SIGNIN_MUTATION, {
+  const [signup, { data, loading, error }] = useMutation(SIGNUP_MUTATION, {
     variables: inputs,
-    refetchQueries: [{ query: CURRENT_USER_QUERY }],
   });
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await signin().catch(console.error);
+    await signup().catch(console.error);
     resetForm();
   }
 
-  const error =
-    data?.authenticateUserWithPassword?.__typename ===
-    'UserAuthenticationWithPasswordFailure'
-      ? data?.authenticateUserWithPassword
-      : undefined;
-
   return (
     <Form method="POST" onSubmit={handleSubmit}>
-      <h2>Sign Into Your Account</h2>
+      <h2>Sign Up for an Account</h2>
       <DisplayError error={error} />
       <fieldset>
+        {data?.createUser && (
+          <p>
+            Signed up with {data.createUser.email} - Please go ahead and sign
+            in!{' '}
+          </p>
+        )}
+        <label htmlFor="name">
+          Name
+          <input
+            type="text"
+            name="name"
+            placeholder="Your name"
+            autoComplete="name"
+            value={inputs.name}
+            onChange={handleChange}
+          />
+        </label>
         <label htmlFor="email">
           Email
           <input
