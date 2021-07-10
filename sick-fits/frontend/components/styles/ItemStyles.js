@@ -31,6 +31,14 @@ const Item = styled.div`
       border: 0;
       font-size: 1rem;
       padding: 1rem;
+      & :hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+    a {
+      text-align: center;
+      text-decoration: none;
     }
   }
 `;

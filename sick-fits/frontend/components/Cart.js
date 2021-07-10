@@ -49,14 +49,14 @@ function CartItem({ cartItem }) {
 
 export default function Cart() {
   const me = useUser();
-  const { openCart, closeCart } = useCart();
+  const { cartOpen, closeCart } = useCart();
 
   if (!me) {
     return null;
   }
 
   return (
-    <CartStyles open={openCart}>
+    <CartStyles open={cartOpen}>
       <header>
         <Supreme>{me.name}'s Cart</Supreme>
       </header>
