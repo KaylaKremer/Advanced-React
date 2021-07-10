@@ -1,5 +1,5 @@
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import styled from 'styled-components/';
+import styled from 'styled-components';
 
 const Dot = styled.div`
   background: var(--red);
