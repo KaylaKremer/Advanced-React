@@ -22,17 +22,18 @@ const CheckoutFormStyles = styled.form`
 `;
 
 const CREATE_ORDER_MUTATION = gql`
- mutation CREATE_ORDER_MUTATION($token: String!) {
-    checkout($token) {
+  mutation CREATE_ORDER_MUTATION($token: String!) {
+    checkout(token: $token) {
+      id
+      charge
+      total
+      items {
         id
-        charge
-        total
-        items {
-            id
-            name
-        }
+        name
+      }
     }
- }`;
+  }
+`;
 
 const stripeLib = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
 
