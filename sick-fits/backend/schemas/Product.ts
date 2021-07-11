@@ -6,8 +6,15 @@ import {
   select,
   integer,
 } from '@keystone-next/fields';
+import { isSignedIn } from '../../../finished-application/backend/access';
 
 export const Product = list({
+  access: {
+    create: isSignedIn,
+    read: isSignedIn,
+    update: isSignedIn,
+    delete: isSignedIn,
+  },
   fields: {
     name: text({ isRequired: true }),
     description: text({
