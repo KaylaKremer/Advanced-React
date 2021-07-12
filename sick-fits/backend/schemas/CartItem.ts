@@ -6,8 +6,18 @@ import {
   select,
   integer,
 } from '@keystone-next/fields';
+import {
+  isSignedIn,
+  rules,
+} from '../../../finished-application/backend/access';
 
 export const CartItem = list({
+  access: {
+    create: isSignedIn,
+    read: rules.canOrder,
+    update: rules.canOrder,
+    delete: rules.canOrder,
+  },
   ui: {
     listView: {
       initialColumns: ['product', 'quantity', 'user'],

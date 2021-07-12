@@ -22,16 +22,40 @@ export const permissions = {
 };
 
 export const rules = {
-  canManageProducts({ session }) {
+  canManageProducts({ session }: ListAccessArgs) {
+    if (!isSignedIn({session})) {
+        return false;
+    }
     if (permissions.canManageProducts({ session })) {
       return true;
     }
     return { user: { id: session.itemId } };
   },
   canReadProducts({ session }: ListAccessArgs) {
+    if (!isSignedIn({session})) {
+        return false;
+    }
     if (permissions.canManageProducts({ session })) {
       return true;
     }
     return { status: 'AVAILABLE' };
+  },
+  canOrder({ session }: ListAccessArgs) {
+    if (!isSignedIn({session})) {
+        return false;
+    }
+    if (permissions.canManageCart({ session })) {
+      return true;
+    }
+    return { user: { id: session.itemId } };
+  },
+  canManageOrderItems({ session }: ListAccessArgs) {
+    if (!isSignedIn({session})) {
+        return false;
+    }
+    if (permissions.canManageCart({ session })) {
+      return true;
+    }
+    return { order: (user: { id: session.itemId } } };
   },
 };
