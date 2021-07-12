@@ -20,3 +20,18 @@ export const permissions = {
     return session?.data.name.includes('kayla');
   },
 };
+
+export const rules = {
+  canManageProducts({ session }) {
+    if (permissions.canManageProducts({ session })) {
+      return true;
+    }
+    return { user: { id: session.itemId } };
+  },
+  canReadProducts({ session }: ListAccessArgs) {
+    if (permissions.canManageProducts({ session })) {
+      return true;
+    }
+    return { status: 'AVAILABLE' };
+  },
+};
