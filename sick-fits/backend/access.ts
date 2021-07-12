@@ -23,8 +23,8 @@ export const permissions = {
 
 export const rules = {
   canManageProducts({ session }: ListAccessArgs) {
-    if (!isSignedIn({session})) {
-        return false;
+    if (!isSignedIn({ session })) {
+      return false;
     }
     if (permissions.canManageProducts({ session })) {
       return true;
@@ -32,8 +32,8 @@ export const rules = {
     return { user: { id: session.itemId } };
   },
   canReadProducts({ session }: ListAccessArgs) {
-    if (!isSignedIn({session})) {
-        return false;
+    if (!isSignedIn({ session })) {
+      return false;
     }
     if (permissions.canManageProducts({ session })) {
       return true;
@@ -41,8 +41,8 @@ export const rules = {
     return { status: 'AVAILABLE' };
   },
   canOrder({ session }: ListAccessArgs) {
-    if (!isSignedIn({session})) {
-        return false;
+    if (!isSignedIn({ session })) {
+      return false;
     }
     if (permissions.canManageCart({ session })) {
       return true;
@@ -50,12 +50,21 @@ export const rules = {
     return { user: { id: session.itemId } };
   },
   canManageOrderItems({ session }: ListAccessArgs) {
-    if (!isSignedIn({session})) {
-        return false;
+    if (!isSignedIn({ session })) {
+      return false;
     }
     if (permissions.canManageCart({ session })) {
       return true;
     }
-    return { order: (user: { id: session.itemId } } };
+    return { order: { user: { id: session.itemId } } };
+  },
+  canManageUsers({ session }: ListAccessArgs) {
+    if (!isSignedIn({ session })) {
+      return false;
+    }
+    if (permissions.canManageUsers({ session })) {
+      return true;
+    }
+    return { id: session.itemId };
   },
 };
